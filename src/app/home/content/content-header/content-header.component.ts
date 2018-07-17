@@ -9,29 +9,30 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 })
 export class ContentHeaderComponent implements OnInit {
   @Output() toggleSize = new EventEmitter();
-  @Input() productsCount;
-  @Input() productsTotal_count;
+  @Input() paginationInfo;
   @Input() fillterList;
   screenWidth: any;
+
   options = [
     { name: 'Newest', value: 1 },
     { name: 'A To Z', value: 2 },
-    { name: 'Z To A', value: 3 }
+    { name: 'Z To A', value: 3 },
+    { name: 'Relevence', value: 4 }
   ]
   optionsMobile = [
-    { name: 'Relevance', value: 1 },
-    { name: 'Newest', value: 2 },
-    { name: 'A To Z', value: 3 },
-    { name: 'Z To A', value: 4 }
+    { name: 'Newest', value: 1 },
+    { name: 'A To Z', value: 2 },
+    { name: 'Z To A', value: 3 },
+    { name: 'Relevence', value: 4 }
   ]
   queryMap = {
     Newest: 'updated_at+asc',
-    Relevance: '',
     'A To Z': 'name+asc',
     'Z To A': 'name+desc',
+    Relevance: '',
   }
 
-  selectedOption: 'Relevance';
+  selectedOption = 'Relevance';
   isMobile: any;
   selectedSize = 'COZY';
   searchKeyword = '';
@@ -76,8 +77,9 @@ export class ContentHeaderComponent implements OnInit {
     const urlTree = this.routernomal.createUrlTree([], {
       queryParams: { 'q[s]': this.queryMap[i] },
       queryParamsHandling: 'merge',
-      preserveFragment: true
+      preserveFragment: true,
     });
     this.routernomal.navigateByUrl(urlTree);
+    this.selectedOption = i;
   }
 }
